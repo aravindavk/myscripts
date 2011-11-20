@@ -1,0 +1,25 @@
+#!/bin/sh
+# Author: Aravinda VK (hallimanearavind@gmail.com)
+# Sample Usage:
+# sh dli.sh http://www.dli.gov.in/data/upload/0046/845/PTIFF 5 10 Bhagavatha_Bhava_Prakasha
+
+mkdir -p dli_books
+i=$2
+while [ $i -le $3 ]
+do
+    # Download the tiff file
+    wget $1/$(printf %8.8d.tif $i)
+
+    # Convert tiff to pdf
+    tiff2pdf $(printf "%8.8d.tif  -o %8.8d.pdf" $i $i);
+
+    
+    echo "[INFO page $i of $3] downloaded tif and converted to pdf"
+    (( i++ ))
+done
+
+# Join all small pdf files into single pdf
+pdfjoin *.pdf  --outfile  dli_books/$4.pdf
+
+# Cleaning the temp tiff and pdf files
+rm *.tif *.pdf
