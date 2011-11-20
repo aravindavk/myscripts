@@ -13,8 +13,6 @@ do
     # Convert tiff to pdf
     tiff2pdf $(printf "%8.8d.tif  -o %8.8d.pdf" $i $i);
 
-    
-    echo "[INFO page $i of $3] downloaded tif and converted to pdf"
     (( i++ ))
 done
 
