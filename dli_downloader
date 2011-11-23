@@ -1,7 +1,7 @@
 #!/bin/sh
 # Author: Aravinda VK (hallimanearavind@gmail.com)
 # Sample Usage:
-# sh dli.sh http://www.dli.gov.in/data/upload/0046/845/PTIFF 5 10 Bhagavatha_Bhava_Prakasha
+# sh dli_downloader http://www.dli.gov.in/data/upload/0046/845/PTIFF 5 10 Bhagavatha_Bhava_Prakasha
 
 mkdir -p dli_books
 i=$2
