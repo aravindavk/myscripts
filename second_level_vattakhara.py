@@ -1,5 +1,5 @@
-#!/bin/sh
-# DLI books downloader 
+#!/usr/bin/python3
+# Second level vattakshara generator
 # The MIT License (MIT)
 # Copyright (c) 2011 Aravinda VK<hallimanearavind@gmail.com>
 
@@ -21,23 +21,27 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-# sh dli_downloader http://www.dli.gov.in/data/upload/0046/845/PTIFF 5 10 Bhagavatha_Bhava_Prakasha
+SPACE = " "
 
-mkdir -p dli_books
-i=$2
-while [ $i -le $3 ]
-do
-    # Download the tiff file
-    wget $1/$(printf %8.8d.tif $i)
+base_consonants = "ಕಖಗಘಙಚಛಜಝಞಟಠಡಢಣತಥದಧನಪಫಬಭಮಯರಲವಶಷಸಹಳ"
 
-    # Convert tiff to pdf
-    tiff2pdf $(printf "%8.8d.tif  -o %8.8d.pdf" $i $i);
+# To extract vowel parts
+sample_consonant_series = "ಕ್ ಕಾ ಕಿ ಕೀ ಕು ಕೂ ಕೃ ಕೄ ಕೆ ಕೇ ಕೈ ಕೊ ಕೋ ಕೌ ಕಂ ಕಃ"
+vowel_parts = list(map(lambda x: x[1], sample_consonant_series.split()))
 
-    (( i++ ))
-done
+# Write All possible vattaksharas (One level)
+halant = "ಕ್"[1]
 
-# Join all small pdf files into single pdf
-pdfjoin *.pdf  --outfile  dli_books/$4.pdf
+counter = 0
+for c in base_consonants:
+    for c1 in base_consonants:
+        for c2 in base_consonants:
+            a_line = c + halant + c1 + halant + c2 + SPACE
+            counter += 1
+            for v in vowel_parts:
+                a_line += c + halant + c1 + halant + c2 + v + SPACE
+                counter += 1
+            print(a_line)
 
-# Cleaning the temp tiff and pdf files
-rm *.tif *.pdf
+
+print(counter)            
